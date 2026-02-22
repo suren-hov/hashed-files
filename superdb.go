@@ -1,12 +1,13 @@
 package main
 
 import (
-    "fmt"
-    "io"
-    "os"
-    "crypto/sha256"
-    "net/http"
-    "errors"
+	"crypto/sha256"
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"superdb/connection"
 )
 
 const STORAGE_PATH = "./storage"
@@ -60,11 +61,12 @@ func handleSave(w http.ResponseWriter, r *http.Request) {
         panic(err)
     }
 
-    fmt.Fprintf(w, hashStr)
+    fmt.Fprintf(w, "%s", hashStr)
 }
 
 func main() {
     fmt.Println("SuperDB started")
+    connection.CheckConnection()
 
     err := os.MkdirAll(STORAGE_PATH, 0755)
 
